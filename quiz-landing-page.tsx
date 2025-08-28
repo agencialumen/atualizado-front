@@ -16,19 +16,7 @@ export default function QuizLandingPage() {
   const router = useRouter()
 
   const handleStartQuiz = () => {
-    // Track quiz start with Meta Pixel only
-    if (typeof window !== "undefined") {
-      // Meta Pixel
-      if (window.fbq) {
-        window.fbq("track", "PageView")
-      }
-
-      // TikTok Pixel - only pageview is necessary here
-      if (window.ttq) {
-        window.ttq("track", "PageView")
-      }
-    }
-
+    // O pageview já é rastreado automaticamente pelo layout
     router.push("/quiz")
   }
 
