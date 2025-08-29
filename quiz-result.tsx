@@ -38,6 +38,15 @@ export default function QuizResult() {
   ]
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.ttq) {
+      window.ttq("track", "CompleteRegistration", {
+        content_name: "Quiz Pampers Completed",
+        content_category: "Quiz",
+        value: 0.0,
+        currency: "BRL",
+      })
+    }
+
     // Meta Pixel - CompleteRegistration quando chega na página de resultado
     if (typeof window !== "undefined" && window.fbq) {
       window.fbq("track", "CompleteRegistration", {
