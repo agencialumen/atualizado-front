@@ -5,13 +5,6 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 
-declare global {
-  interface Window {
-    fbq: any
-    ttq: any
-  }
-}
-
 export default function QuizResult() {
   const router = useRouter()
   const [timeLeft, setTimeLeft] = useState(5 * 60) // 5 minutos em segundos
@@ -44,28 +37,15 @@ export default function QuizResult() {
     },
   ]
 
-  // Track quiz completion when component loads
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      // Meta Pixel - Quiz Completed
-      if (window.fbq) {
-        window.fbq("track", "CompleteRegistration", {
-          content_name: "Quiz Pampers Completed",
-          content_category: "Quiz",
-          value: 0.0,
-          currency: "BRL",
-        })
-      }
-
-      // TikTok Pixel - Quiz Completed
-      if (window.ttq) {
-        window.ttq.track("CompleteRegistration", {
-          content_name: "Quiz Pampers Completed",
-          content_category: "Quiz",
-          value: 0.0,
-          currency: "BRL",
-        })
-      }
+    // Meta Pixel - CompleteRegistration quando chega na página de resultado
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "CompleteRegistration", {
+        content_name: "Quiz Pampers Completed",
+        content_category: "Quiz",
+        value: 0.0,
+        currency: "BRL",
+      })
     }
   }, [])
 
@@ -94,27 +74,14 @@ export default function QuizResult() {
   }
 
   const handleClaimDiscount = () => {
-    // Track conversion with both pixels
-    if (typeof window !== "undefined") {
-      // Meta Pixel - Purchase/Conversion
-      if (window.fbq) {
-        window.fbq("track", "Purchase", {
-          content_name: "Pampers Discount Claimed",
-          content_category: "Discount",
-          value: 98.0,
-          currency: "BRL",
-        })
-      }
-
-      // TikTok Pixel - InitiateCheckout (quando vai para o checkout)
-      if (window.ttq) {
-        window.ttq.track("InitiateCheckout", {
-          content_name: "Pampers Discount Claimed",
-          content_category: "Discount",
-          value: 98.0,
-          currency: "BRL",
-        })
-      }
+    // Meta Pixel - Purchase quando clica para resgatar
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "Purchase", {
+        content_name: "Pampers Discount Claimed",
+        content_category: "Discount",
+        value: 98.0,
+        currency: "BRL",
+      })
     }
 
     // Redireciona para a página de resgate do desconto
